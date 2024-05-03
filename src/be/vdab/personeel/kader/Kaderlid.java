@@ -25,9 +25,8 @@ public class Kaderlid extends Bediende {
         if (functietitel!=null) {
             this.functietitel = functietitel;
         }
-        else{
             throw new WerknemerException("Functietitel moet ingevuld worden");
-        }
+
     }
 
     @Override

@@ -23,10 +23,9 @@ public class Arbeider extends Werknemer{
 
     public void setUurloon(BigDecimal uurloon) {
         if(uurloon.compareTo(minUurloon)>0){
-        this.uurloon = uurloon;}
-        else{
-            throw new WerknemerException("Uurloon is te laag");
+        this.uurloon = uurloon;
         }
+            throw new WerknemerException("Uurloon is te laag");
     }
 
     @Override

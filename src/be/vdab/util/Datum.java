@@ -14,70 +14,48 @@ public class Datum implements IDatum, Serializable,  Comparable<Datum> {
 
 
     public Datum(int dag, int maand, int jaar){
-        if(isDagVanMaand(dag, maand)){
-            this.dag = dag;
-        }
-        else{
-            throw new DatumException("Deze dag bestaat niet");
-        }
+        setDag(dag);
         setMaand(maand);
         setJaar(jaar);
     }
 
-    public boolean isDagVanMaand(int dag, int maand) {
-        if (dag >= 1 && dag <= 31) {
-            if(maand ==2|| maand==4||maand==6||maand==9||maand==11){
-                if(maand == 2) {
-                    if (isSchrikkeljaar(jaar)) {
-                        return dag <= 29;
 
-                    }
-                    else{
-                        return dag <= 28;
-
-                    }
-                }
-                else{
-                    return dag <= 30;
-                }
-            }
-            else {
-                return true;
-            }
-        }return false;
+    private void setDag(int dag) {
+        if (dag < 1 || dag > 31) {
+            throw new DatumException("Dag moet tussen 1 en 31 liggen.");
+        }
+        if ((maand == 4 || maand == 6 || maand == 9 || maand == 11) && dag > 30) {
+            throw new DatumException("Maand kan maar 30 dagen hebben");
+        }
+        if (maand == 2 && !isSchrikkeljaar() && dag > 28) {
+            throw new DatumException("Het is geen schrikkeljaar, maand kan maar 28 dagen hebben");
+        }
+        if (maand == 2 && isSchrikkeljaar() && dag > 29) {
+            throw new DatumException("Het is een schrikkeljaar, maand is maximum 29 dagen");
+        }
+        this.dag = dag;
     }
 
-    private void setMaand(int maand){
-        if(maand<1 || maand>12){
+
+
+
+        private void setMaand(int maand){
+        if(maand>=1 && maand<=12){
             this.maand = maand;
-        }throw new DatumException("Deze dag bestaat niet");
+        } throw new DatumException("Deze dag bestaat niet ");
+
     }
 
     private void setJaar(int jaar){
         if(jaar>=1584 && jaar<=4099){
             this.jaar = jaar;
-        }
-        else{
-            throw new DatumException("Ongeldig jaar");
-        }
+        } throw new DatumException("Ongeldig jaar");
+
     }
 
-
-
-
-
-    public boolean isSchrikkeljaar(int jaar){
-        if(jaar%400 ==0){
-            return true;
+    public boolean isSchrikkeljaar(){
+        return (jaar % 4 == 0) && ((jaar % 100 != 0) || (jaar % 400 == 0));
         }
-        else if (jaar%100==0) {
-            return false;
-        }
-        else if(jaar%4==0){
-            return true;
-
-        }return false;
-    }
 
     @Override
     public int getDag() {
@@ -115,28 +93,11 @@ public class Datum implements IDatum, Serializable,  Comparable<Datum> {
 
     @Override
     public int compareTo(Datum d){
-        return(this.jaar*10000+this.maand*100+this.dag)-(d.getJaar()*1000+d.getMaand()*100+d.getDag());
+        return(this.jaar*10000+this.maand*100+this.dag)-(d.getJaar()*10000+d.getMaand()*100+d.getDag());
     }
 
 
-//    @Override
-//    public int compareTo(Datum d) {
-//        if (this.jaar > d.getJaar()) {
-//            return 1;
-//        } else if (this.jaar < d.getJaar()) {
-//            return -1;
-//        } else if (this.maand > d.getMaand()) {
-//            return 1;
-//        } else if (this.maand < d.getMaand()) {
-//            return -1;
-//        } else if (this.dag > d.getDag()) {
-//            return 1;
-//        } else if (this.dag < d.getDag()) {
-//            return -1;
-//        } else {
-//            return 0;
-//        }
-//    }
+
 
 
 

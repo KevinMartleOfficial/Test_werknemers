@@ -20,11 +20,10 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
 
 
     public Werknemer(int personeelsnummer, WerknemersDatum datumInDienst, String naam, Geslacht geslacht) {
-        if(personeelsnummer>0){
-        PERSONEELSNUMMER = personeelsnummer;}
-        else{
+        if (personeelsnummer < 1) {
             throw new WerknemerException("Ongeldig personeelsnummer");
         }
+        PERSONEELSNUMMER = personeelsnummer;
         setDatumInDienst(datumInDienst);
         setNaam(naam);
         setGeslacht(geslacht);
@@ -37,12 +36,9 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
     }
 
     public void setDatumInDienst(WerknemersDatum datumInDienst) {
-        if(datumInDienst.isGeldig(datumInDienst)){
         this.datumInDienst = datumInDienst;
-    }
-    else{
-        throw new WerknemerException("Startdatum kan niet beginnen voor oprichtingsdatum");
-        }}
+
+}
 
     public String getNaam() {
         return naam;
@@ -52,9 +48,7 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
         if(!naam.isBlank()) {
             this.naam = naam;
         }
-        else{
             throw new WerknemerException("Naam moet ingevuld worden");
-        }
     }
 
     public Geslacht getGeslacht() {
@@ -65,9 +59,8 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
         if(!(geslacht ==null)) {
             this.geslacht = geslacht;
         }
-        else{
             throw new WerknemerException("Kies een geslacht");
-        }
+
     }
 
     public int getPERSONEELSNUMMER() {
@@ -78,15 +71,7 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
 
     @Override
     public int compareTo(Werknemer o) {
-        if (this.PERSONEELSNUMMER>o.PERSONEELSNUMMER) {
-            return 1;
-        }
-        else if(this.PERSONEELSNUMMER<o.PERSONEELSNUMMER){
-            return -1;
-        }
-        else {
-            return 0;
-        }
+      return this.getPERSONEELSNUMMER()-o.getPERSONEELSNUMMER();
     }
 
     @Override
@@ -96,10 +81,14 @@ public abstract class Werknemer implements Serializable, Comparable<Werknemer> {
         return PERSONEELSNUMMER == werknemer.PERSONEELSNUMMER;
     }
 
+
+
     @Override
     public int hashCode() {
         return Objects.hashCode(PERSONEELSNUMMER);
     }
+
+
 
 
     @Override

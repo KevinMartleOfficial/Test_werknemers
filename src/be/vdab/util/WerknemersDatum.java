@@ -6,14 +6,18 @@ public class WerknemersDatum extends Datum{
 
     public WerknemersDatum(int dag, int maand, int jaar) {
         super(dag, maand, jaar);
+        testDatum(dag, maand, jaar);
 
     }
 
-    public boolean isGeldig(WerknemersDatum d){
-        if(oprichtingsdatum.compareTo(d)<=0){
-            return true;
-        }return false;
+    public void testDatum(int dag, int maand, int jaar){
+        if(oprichtingsdatum.compareTo(new Datum(dag, maand, jaar))<0){
+            throw new WerknemerException("Kan niet starten voor oprichtingsdatum");
+        }
+
     }
+
+
 
 
 

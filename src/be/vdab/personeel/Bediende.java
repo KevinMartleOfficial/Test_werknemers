@@ -24,9 +24,8 @@ public class Bediende extends Werknemer{
         if(maandwedde.compareTo(minMaandwedde)>0) {
             this.maandwedde = maandwedde;
         }
-        else{
             throw new WerknemerException("Dit is minder dan het minimum maandloon!!");
-        }
+
     }
 
     @Override
